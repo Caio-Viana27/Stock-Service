@@ -1,6 +1,6 @@
 package com.tidyup.StockService.domain.product.entity;
 
-import com.tidyup.StockService.domain.product.dto.CategoryDTO;
+import com.tidyup.StockService.domain.product.dto.ProductCategoryDTO;
 import com.tidyup.StockService.domain.product.dto.CreateProductDTO;
 import com.tidyup.StockService.domain.product.dto.ProductStatusDTO;
 import com.tidyup.StockService.domain.product.dto.UpdateProductDTO;
@@ -52,11 +52,11 @@ public class Product {
     @JoinColumn(name = "BRAND_ID")
     private Brand brand;
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(name = "PRODUCT_CATEGORY",
                joinColumns = {@JoinColumn(name = "PRODUCT_ID")},
                inverseJoinColumns = {@JoinColumn(name = "CATEGORY_ID")})
-    private List<Category> categoryList;
+    private List<ProductCategory> productCategoryList;
 
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
@@ -73,7 +73,7 @@ public class Product {
         this.inventory = dto.inventory();
         this.status = new ProductStatus(dto.status());
         this.brand = new Brand(dto.brand());
-        this.categoryList = dto.categoryList().stream().map(Category::new).toList();
+        this.productCategoryList = dto.categoryList().stream().map(ProductCategory::new).toList();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;
     }
@@ -85,7 +85,7 @@ public class Product {
         this.price = data.price();
         this.inventory = data.inventory();
         this.status = new ProductStatus(data.status());
-        this.categoryList = data.categoryList().stream().map(Category::new).toList();
+        this.productCategoryList = data.categoryList().stream().map(ProductCategory::new).toList();
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -94,8 +94,8 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void update(List<CategoryDTO> data) {
-        this.categoryList = data.stream().map(Category::new).toList();
+    public void update(List<ProductCategoryDTO> data) {
+        this.productCategoryList = data.stream().map(ProductCategory::new).toList();
         this.updatedAt = LocalDateTime.now();
     }
 }

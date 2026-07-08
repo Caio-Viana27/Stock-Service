@@ -33,7 +33,7 @@ public record UpdateProductDTO(
         SimpleBrandDTO brand,
 
         @NotNull
-        List<CategoryDTO> categoryList,
+        List<ProductCategoryDTO> categoryList,
 
         @NotNull
         LocalDateTime updatedAt
@@ -46,7 +46,7 @@ public record UpdateProductDTO(
              product.getInventory(),
              new ProductStatusDTO(product.getStatus()),
              new SimpleBrandDTO(product.getBrand()),
-             product.getCategoryList().stream().map(CategoryDTO::new).toList(),
+             product.getProductCategoryList().stream().map(ProductCategoryDTO::new).toList(),
              product.getUpdatedAt()
         );
     }

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 
     private final String URI_BASE = "https://localhost:8080/products";
@@ -59,7 +59,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}/categories")
-    public ResponseEntity<DetailedProductDTO> updateProductStatus(@PathVariable UUID id, @RequestBody @Valid List<CategoryDTO> data) {
+    public ResponseEntity<DetailedProductDTO> updateProductStatus(@PathVariable UUID id, @RequestBody @Valid List<ProductCategoryDTO> data) {
         DetailedProductDTO product = productService.update(id, data);
         return ResponseEntity.ok(product);
     }

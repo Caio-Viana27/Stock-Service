@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 public record DetailedProductDTO(
-        @NotBlank @Size(max = 32, min = 32)
+        @NotNull
         UUID Id,
 
-        @NotBlank @Size(max = 32, min = 32)
+        @NotNull
         UUID retailerId,
 
         @NotBlank @Size(max = 32, min = 32)
@@ -40,7 +40,7 @@ public record DetailedProductDTO(
         SimpleBrandDTO brand,
 
         @NotNull
-        List<CategoryDTO> categoryList,
+        List<ProductCategoryDTO> categoryList,
 
         @NotNull
         LocalDateTime createdAt
@@ -55,7 +55,7 @@ public record DetailedProductDTO(
              product.getInventory(),
              new ProductStatusDTO(product.getStatus()),
              new SimpleBrandDTO(product.getBrand()),
-             product.getCategoryList().stream().map(CategoryDTO::new).toList(),
+             product.getProductCategoryList().stream().map(ProductCategoryDTO::new).toList(),
              product.getCreatedAt()
         );
     }

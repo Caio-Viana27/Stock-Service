@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record CreateProductDTO(
-        @NotBlank @Size(max = 32, min = 32)
+        @NotNull
         UUID retailerId,
 
         @NotBlank @Size(max = 20)
@@ -35,6 +35,6 @@ public record CreateProductDTO(
         BrandDTO brand,
 
         @NotNull
-        List<CategoryDTO> categoryList
+        List<ProductCategoryDTO> categoryList
 ) {
 }

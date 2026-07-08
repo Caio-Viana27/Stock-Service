@@ -1,6 +1,7 @@
 package com.tidyup.StockService.infrastruture.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.UnexpectedTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,5 +22,10 @@ public class ProductExceptionHandler {
     public ResponseEntity<List<ErrorMessage>> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         List<FieldError> errors = exception.getFieldErrors();
         return ResponseEntity.badRequest().body(errors.stream().map(ErrorMessage::new).toList());
+    }
+
+    @ExceptionHandler(UnexpectedTypeException.class)
+    public ResponseEntity<ErrorMessage> handleUnexpectedTypeException(UnexpectedTypeException exception) {
+        return ResponseEntity.badRequest().body(new ErrorMessage("Error",exception.getMessage()));
     }
 }
