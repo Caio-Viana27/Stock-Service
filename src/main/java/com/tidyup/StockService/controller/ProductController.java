@@ -27,7 +27,7 @@ public class ProductController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DetailedProductDTO> createProduct(@RequestBody @Valid CreateProductRequest productData, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DetailedProductDTO> createProduct(@RequestBody @Valid CreateProductDTO productData, UriComponentsBuilder uriBuilder) {
         DetailedProductDTO product = productService.createProduct(productData);
         URI uri = uriBuilder.path(URI_BASE + "/{id}").buildAndExpand(product.Id()).toUri();
         return ResponseEntity.created(uri).body(product);
@@ -47,7 +47,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<DetailedProductDTO> updateProduct(@PathVariable UUID id, @RequestBody @Valid UpdateProductRequest data) {
+    public ResponseEntity<DetailedProductDTO> updateProduct(@PathVariable UUID id, @RequestBody @Valid UpdateProductDTO data) {
         DetailedProductDTO product = productService.update(id, data);
         return ResponseEntity.ok(product);
     }

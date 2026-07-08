@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record UpdateProductRequest(
+public record UpdateProductDTO(
         @NotBlank @Size(max = 20)
         String SKU,
 
@@ -30,7 +30,7 @@ public record UpdateProductRequest(
         ProductStatusDTO status,
 
         @NotNull
-        GetBrandResponse brand,
+        SimpleBrandDTO brand,
 
         @NotNull
         List<CategoryDTO> categoryList,
@@ -38,14 +38,14 @@ public record UpdateProductRequest(
         @NotNull
         LocalDateTime updatedAt
 ) {
-    public UpdateProductRequest(Product product) {
+    public UpdateProductDTO(Product product) {
         this(product.getSKU(),
              product.getName(),
              product.getDescription(),
              product.getPrice(),
              product.getInventory(),
              new ProductStatusDTO(product.getStatus()),
-             new GetBrandResponse(product.getBrand()),
+             new SimpleBrandDTO(product.getBrand()),
              product.getCategoryList().stream().map(CategoryDTO::new).toList(),
              product.getUpdatedAt()
         );

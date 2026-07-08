@@ -18,7 +18,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public DetailedProductDTO createProduct(CreateProductRequest dto) {
+    public DetailedProductDTO createProduct(CreateProductDTO dto) {
         var product = new Product(dto);
         productRepository.save(product);
         return new DetailedProductDTO(product);
@@ -32,7 +32,7 @@ public class ProductService {
         return productRepository.findById(id.toString()).map(SimpleProductDTO::new).orElseThrow(EntityNotFoundException::new);
     }
 
-    public DetailedProductDTO update(UUID id, UpdateProductRequest data) {
+    public DetailedProductDTO update(UUID id, UpdateProductDTO data) {
         Product product = productRepository.findById(id.toString()).orElseThrow(EntityNotFoundException::new);
         product.update(data);
         return new DetailedProductDTO(product);

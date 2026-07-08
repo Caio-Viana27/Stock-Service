@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-public record CreateProductRequest(
+public record CreateProductDTO(
         @NotBlank @Size(max = 32, min = 32)
         UUID retailerId,
 

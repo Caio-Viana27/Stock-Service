@@ -1,11 +1,10 @@
 package com.tidyup.StockService.domain.product.entity;
 
 import com.tidyup.StockService.domain.product.dto.CategoryDTO;
-import com.tidyup.StockService.domain.product.dto.CreateProductRequest;
+import com.tidyup.StockService.domain.product.dto.CreateProductDTO;
 import com.tidyup.StockService.domain.product.dto.ProductStatusDTO;
-import com.tidyup.StockService.domain.product.dto.UpdateProductRequest;
+import com.tidyup.StockService.domain.product.dto.UpdateProductDTO;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,7 +64,7 @@ public class Product {
     @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
-    public Product(CreateProductRequest dto) {
+    public Product(CreateProductDTO dto) {
         this.retailerId = dto.retailerId();
         this.SKU = dto.SKU();
         this.name = dto.name();
@@ -79,7 +78,7 @@ public class Product {
         this.updatedAt = this.createdAt;
     }
 
-    public void update(UpdateProductRequest data) {
+    public void update(UpdateProductDTO data) {
         this.SKU = data.SKU();
         this.name = data.name();
         this.description = data.description();
