@@ -28,20 +28,20 @@ public class ProductController {
     @PostMapping
     @Transactional
     public ResponseEntity<DetailedProductDTO> createProduct(@RequestBody @Valid CreateProductDTO productData, UriComponentsBuilder uriBuilder) {
-        DetailedProductDTO product = productService.createProduct(productData);
+        DetailedProductDTO product = productService.create(productData);
         URI uri = uriBuilder.path(URI_BASE + "/{id}").buildAndExpand(product.Id()).toUri();
         return ResponseEntity.created(uri).body(product);
     }
 
     @GetMapping
     public ResponseEntity<Page<SimpleProductDTO>> getProducts(@PageableDefault(size = 20) Pageable pageable) {
-        Page<SimpleProductDTO> page = productService.getProducts(pageable);
+        Page<SimpleProductDTO> page = productService.getAll(pageable);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SimpleProductDTO> getProduct(@PathVariable UUID id) {
-        SimpleProductDTO product = productService.getProduct(id);
+        SimpleProductDTO product = productService.getById(id);
         return ResponseEntity.ok(product);
     }
 

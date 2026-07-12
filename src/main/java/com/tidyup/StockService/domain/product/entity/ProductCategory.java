@@ -26,4 +26,8 @@ public class ProductCategory {
     public ProductCategory(ProductCategoryDTO dto) {
         this.category = dto.category();
     }
+
+    public void update(ProductCategoryDTO productCategory) {
+        this.category = productCategory.category();
+    }
 }

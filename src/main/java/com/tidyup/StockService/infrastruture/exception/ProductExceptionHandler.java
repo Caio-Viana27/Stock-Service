@@ -2,6 +2,7 @@ package com.tidyup.StockService.infrastruture.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.UnexpectedTypeException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,6 +27,21 @@ public class ProductExceptionHandler {
 
     @ExceptionHandler(UnexpectedTypeException.class)
     public ResponseEntity<ErrorMessage> handleUnexpectedTypeException(UnexpectedTypeException exception) {
-        return ResponseEntity.badRequest().body(new ErrorMessage("Error",exception.getMessage()));
+        return ResponseEntity.badRequest().body(new ErrorMessage("",exception.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<ErrorMessage> handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException exception) {
+        return ResponseEntity.badRequest().body(new ErrorMessage("", exception.getMessage()));
+    }
+
+    @ExceptionHandler(EntityDoesNotExistException.class)
+    public ResponseEntity<ErrorMessage> handleEntityDoesNotExistException(EntityDoesNotExistException exception) {
+        return ResponseEntity.badRequest().body(new ErrorMessage("", exception.getMessage()));
+    }
+
+    @ExceptionHandler(EntityDoesNotMatchException.class)
+    public ResponseEntity<ErrorMessage> handleEntityDoesNotMatchException(EntityDoesNotMatchException exception) {
+        return ResponseEntity.badRequest().body(new ErrorMessage("", exception.getMessage()));
     }
 }
