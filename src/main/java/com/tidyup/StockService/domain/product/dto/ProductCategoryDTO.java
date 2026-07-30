@@ -15,6 +15,6 @@ public record ProductCategoryDTO(
         Category category
 ) {
     public ProductCategoryDTO(ProductCategory productCategory) {
-        this(productCategory.getCategory());
+        this(productCategory.getId(), productCategory.getCategory());
     }
 }

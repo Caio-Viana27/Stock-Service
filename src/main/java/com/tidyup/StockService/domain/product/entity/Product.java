@@ -73,7 +73,7 @@ public class Product {
         this.inventory = dto.inventory();
         this.status = new ProductStatus(dto.status());
         this.brand = new Brand(dto.brand());
-        this.productCategoryList = dto.categoryList().stream().map(ProductCategory::new).toList();
+        this.productCategoryList = dto.categoriesList().stream().map(ProductCategory::new).toList();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;
     }

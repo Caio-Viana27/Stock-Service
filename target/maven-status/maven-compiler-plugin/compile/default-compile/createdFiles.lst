@@ -24,7 +24,6 @@ com/tidyup/StockService/Repository/BrandRepository.class
 com/tidyup/StockService/Service/BrandService.class
 com/tidyup/StockService/domain/product/dto/DetailedProductDTO.class
 com/tidyup/StockService/Service/ProductService.class
-com/tidyup/StockService/Repository/ProductStatusRepository.class
 com/tidyup/StockService/domain/product/dto/ProductCategoryDTO.class
 com/tidyup/StockService/infrastruture/exception/EntityDoesNotMatchException.class
 com/tidyup/StockService/domain/product/dto/UpdateProductDTO.class

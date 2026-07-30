@@ -75,11 +75,11 @@ public class ProductService {
         Optional<Brand> brandOptional = brandRepository.findById(dto.id());
 
         if (brandOptional.isEmpty())
-            throw new EntityDoesNotExistException("Brand entity with id: " + dto.id() + " doesn't exists!");
+            throw new EntityDoesNotExistException("Brand entity with id: " + dto.id() + " doesn't exist!");
         Brand brandEntity = brandOptional.get();
 
         if (!brandEntity.equals(dto))
-            throw new EntityDoesNotMatchException("Brand attributes don't match the fields of the Brand entity with the Id: " + brandEntity.getId());
+            throw new EntityDoesNotMatchException("Brand attributes don't match the fields of the Brand entity with the id: " + brandEntity.getId());
         return brandEntity;
     }
 
@@ -89,11 +89,11 @@ public class ProductService {
         list.forEach(productCategoryDTO -> {
             Optional<ProductCategory> productCategoryOptional = productCategoryRepository.findById(productCategoryDTO.id());
             if (productCategoryOptional.isEmpty())
-                throw new EntityDoesNotExistException("Brand entity with id: " + productCategoryDTO.id() + " doesn't exists!");
+                throw new EntityDoesNotExistException("Category entity with id: " + productCategoryDTO.id() + " doesn't exists!");
             ProductCategory productCategoryEntity = productCategoryOptional.get();
 
             if (!productCategoryEntity.equals(productCategoryDTO))
-                throw new EntityDoesNotMatchException("Brand attributes don't match the fields of the Brand entity with the Id: " + productCategoryEntity.getId());
+                throw new EntityDoesNotMatchException("Category attributes don't match the fields of the Category entity with the Id: " + productCategoryEntity.getId());
             validProductCategoryEntities.add(productCategoryEntity);
         });
 
