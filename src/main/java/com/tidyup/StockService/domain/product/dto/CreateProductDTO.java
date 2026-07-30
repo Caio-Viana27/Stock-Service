@@ -35,6 +35,6 @@ public record CreateProductDTO(
         BrandDTO brand,
 
         @NotNull
-        List<ProductCategoryDTO> categoryList
+        List<ProductCategoryDTO> categoriesList
 ) {
 }

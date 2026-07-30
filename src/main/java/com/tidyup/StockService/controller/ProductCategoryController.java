@@ -3,7 +3,6 @@ package com.tidyup.StockService.controller;
 import com.tidyup.StockService.Service.ProductCategoryService;
 import com.tidyup.StockService.domain.product.dto.DetailedProductCategoryDTO;
 import com.tidyup.StockService.domain.product.dto.ProductCategoryDTO;
-import com.tidyup.StockService.domain.product.dto.UpdateProductDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

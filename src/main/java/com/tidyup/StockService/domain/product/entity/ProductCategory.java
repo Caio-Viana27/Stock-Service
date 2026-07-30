@@ -24,10 +24,15 @@ public class ProductCategory {
     private Category category;
 
     public ProductCategory(ProductCategoryDTO dto) {
+        this.id = dto.id();
         this.category = dto.category();
     }
 
     public void update(ProductCategoryDTO productCategory) {
         this.category = productCategory.category();
+    }
+
+    public boolean equals(ProductCategoryDTO dto) {
+        return this.id.equals(dto.id()) && this.category.equals(dto.category());
     }
 }

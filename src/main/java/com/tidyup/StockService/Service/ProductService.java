@@ -3,10 +3,10 @@ package com.tidyup.StockService.Service;
 import com.tidyup.StockService.Repository.BrandRepository;
 import com.tidyup.StockService.Repository.ProductCategoryRepository;
 import com.tidyup.StockService.Repository.ProductRepository;
-import com.tidyup.StockService.Repository.ProductStatusRepository;
 import com.tidyup.StockService.domain.product.dto.*;
 import com.tidyup.StockService.domain.product.entity.Brand;
 import com.tidyup.StockService.domain.product.entity.Product;
+import com.tidyup.StockService.domain.product.entity.ProductCategory;
 import com.tidyup.StockService.infrastruture.exception.EntityDoesNotExistException;
 import com.tidyup.StockService.infrastruture.exception.EntityDoesNotMatchException;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,10 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 @Service
 public class ProductService {
@@ -32,21 +32,10 @@ public class ProductService {
     @Autowired
     private BrandRepository brandRepository;
 
-    @Autowired
-    private ProductStatusRepository productStatusRepository;
-
-
     public DetailedProductDTO create(CreateProductDTO dto) {
         var product = new Product(dto);
-
-        Optional<Brand> optional = brandRepository.findById(dto.brand().id());
-        if (optional.isEmpty()) throw new EntityDoesNotExistException("Brand entity with id: " + dto.brand().id() + " doesn't exists!");
-        Brand brand = optional.get();
-        if (!brand.equals(dto.brand())) throw new EntityDoesNotMatchException("Brand attributes Don't match the fields of the Brand entity with the Id: " + brand.getId());
-        product.setBrand(brand);
-
-
-
+        product.setBrand(validateBrand(dto.brand()));
+        product.setProductCategoryList(validateProductCategoryList(dto.categoriesList()));
         productRepository.save(product);
         return new DetailedProductDTO(product);
     }
@@ -80,5 +69,34 @@ public class ProductService {
     public void delete(UUID id) {
         productRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         productRepository.deleteById(id);
+    }
+
+    private Brand validateBrand(BrandDTO dto) {
+        Optional<Brand> brandOptional = brandRepository.findById(dto.id());
+
+        if (brandOptional.isEmpty())
+            throw new EntityDoesNotExistException("Brand entity with id: " + dto.id() + " doesn't exists!");
+        Brand brandEntity = brandOptional.get();
+
+        if (!brandEntity.equals(dto))
+            throw new EntityDoesNotMatchException("Brand attributes don't match the fields of the Brand entity with the Id: " + brandEntity.getId());
+        return brandEntity;
+    }
+
+    private List<ProductCategory> validateProductCategoryList(List<ProductCategoryDTO> list) {
+        List<ProductCategory> validProductCategoryEntities = new ArrayList<>();
+
+        list.forEach(productCategoryDTO -> {
+            Optional<ProductCategory> productCategoryOptional = productCategoryRepository.findById(productCategoryDTO.id());
+            if (productCategoryOptional.isEmpty())
+                throw new EntityDoesNotExistException("Brand entity with id: " + productCategoryDTO.id() + " doesn't exists!");
+            ProductCategory productCategoryEntity = productCategoryOptional.get();
+
+            if (!productCategoryEntity.equals(productCategoryDTO))
+                throw new EntityDoesNotMatchException("Brand attributes don't match the fields of the Brand entity with the Id: " + productCategoryEntity.getId());
+            validProductCategoryEntities.add(productCategoryEntity);
+        });
+
+        return validProductCategoryEntities;
     }
 }
