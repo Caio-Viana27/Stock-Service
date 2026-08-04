@@ -26,4 +26,13 @@ public class ProductStatus {
     public ProductStatus(ProductStatusDTO dto) {
         this.status = dto.status();
     }
+
+    public void update(ProductStatusDTO dto) {
+        /*StatusValue value = StatusValue.valueOf(dto.status().name());*/
+        this.status = dto.status();
+    }
+
+    public boolean equals(ProductStatusDTO dto) {
+        return this.id.equals(dto.id()) && this.status.equals(dto.status());
+    }
 }

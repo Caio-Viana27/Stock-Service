@@ -17,9 +17,8 @@ public class ProductCategoryService {
     private ProductCategoryRepository categoryRepository;
 
     public DetailedProductCategoryDTO create(ProductCategoryDTO productCategory) {
-        var category = new ProductCategory(productCategory);
-        categoryRepository.save(category);
-        return new DetailedProductCategoryDTO(category);
+        var categoryEntity = categoryRepository.save(new ProductCategory(productCategory));
+        return new DetailedProductCategoryDTO(categoryEntity);
     }
 
     public Page<ProductCategoryDTO> getAll(Pageable pageable) {

@@ -3,10 +3,12 @@ package com.tidyup.StockService.Service;
 import com.tidyup.StockService.Repository.BrandRepository;
 import com.tidyup.StockService.Repository.ProductCategoryRepository;
 import com.tidyup.StockService.Repository.ProductRepository;
+import com.tidyup.StockService.Repository.ProductStatusRepository;
 import com.tidyup.StockService.domain.product.dto.*;
 import com.tidyup.StockService.domain.product.entity.Brand;
 import com.tidyup.StockService.domain.product.entity.Product;
 import com.tidyup.StockService.domain.product.entity.ProductCategory;
+import com.tidyup.StockService.domain.product.entity.ProductStatus;
 import com.tidyup.StockService.infrastruture.exception.EntityDoesNotExistException;
 import com.tidyup.StockService.infrastruture.exception.EntityDoesNotMatchException;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,12 +34,16 @@ public class ProductService {
     @Autowired
     private BrandRepository brandRepository;
 
+    @Autowired
+    private ProductStatusRepository productStatusRepository;
+
     public DetailedProductDTO create(CreateProductDTO dto) {
         var product = new Product(dto);
         product.setBrand(validateBrand(dto.brand()));
         product.setProductCategoryList(validateProductCategoryList(dto.categoriesList()));
-        productRepository.save(product);
-        return new DetailedProductDTO(product);
+        product.setStatus(validateProductStatus(dto.status()));
+        var productEntity = productRepository.save(product);
+        return new DetailedProductDTO(productEntity);
     }
 
     public Page<SimpleProductDTO> getAll(Pageable pageable) {
@@ -75,7 +81,7 @@ public class ProductService {
         Optional<Brand> brandOptional = brandRepository.findById(dto.id());
 
         if (brandOptional.isEmpty())
-            throw new EntityDoesNotExistException("Brand entity with id: " + dto.id() + " doesn't exist!");
+            throw new EntityDoesNotExistException("Brand with id: " + dto.id() + " doesn't exist!");
         Brand brandEntity = brandOptional.get();
 
         if (!brandEntity.equals(dto))
@@ -89,7 +95,7 @@ public class ProductService {
         list.forEach(productCategoryDTO -> {
             Optional<ProductCategory> productCategoryOptional = productCategoryRepository.findById(productCategoryDTO.id());
             if (productCategoryOptional.isEmpty())
-                throw new EntityDoesNotExistException("Category entity with id: " + productCategoryDTO.id() + " doesn't exists!");
+                throw new EntityDoesNotExistException("Category with id: " + productCategoryDTO.id() + " doesn't exists!");
             ProductCategory productCategoryEntity = productCategoryOptional.get();
 
             if (!productCategoryEntity.equals(productCategoryDTO))
@@ -98,5 +104,17 @@ public class ProductService {
         });
 
         return validProductCategoryEntities;
+    }
+
+    private ProductStatus validateProductStatus(ProductStatusDTO dto) {
+        Optional<ProductStatus> productStatusOptional = productStatusRepository.findById(dto.id());
+
+        if (productStatusOptional.isEmpty())
+            throw new EntityDoesNotExistException("Product Status with id: " + dto.id() + " doesn't exist!");
+        ProductStatus productStatusEntity = productStatusOptional.get();
+
+        if (!productStatusEntity.equals(dto))
+            throw new EntityDoesNotMatchException("Product Status attributes don't match the fields of the Product Status entity with the id: " + productStatusEntity.getId());
+        return productStatusEntity;
     }
 }

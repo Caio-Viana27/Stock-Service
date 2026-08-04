@@ -1,3 +1,4 @@
+com/tidyup/StockService/controller/ProductStatusController.class
 com/tidyup/StockService/domain/product/dto/SimpleBrandDTO.class
 com/tidyup/StockService/domain/product/entity/ProductStatus.class
 com/tidyup/StockService/domain/product/entity/ProductCategory.class
@@ -12,6 +13,7 @@ com/tidyup/StockService/domain/product/entity/Product.class
 com/tidyup/StockService/domain/product/dto/ProductStatusDTO.class
 com/tidyup/StockService/domain/product/dto/CreateProductDTO.class
 com/tidyup/StockService/Repository/ProductRepository.class
+com/tidyup/StockService/domain/product/dto/DetailedProductStatusDTO.class
 com/tidyup/StockService/domain/product/entity/Brand.class
 com/tidyup/StockService/controller/ProductController.class
 com/tidyup/StockService/domain/product/dto/BrandDTO.class
@@ -24,6 +26,8 @@ com/tidyup/StockService/Repository/BrandRepository.class
 com/tidyup/StockService/Service/BrandService.class
 com/tidyup/StockService/domain/product/dto/DetailedProductDTO.class
 com/tidyup/StockService/Service/ProductService.class
+com/tidyup/StockService/Repository/ProductStatusRepository.class
 com/tidyup/StockService/domain/product/dto/ProductCategoryDTO.class
 com/tidyup/StockService/infrastruture/exception/EntityDoesNotMatchException.class
 com/tidyup/StockService/domain/product/dto/UpdateProductDTO.class
+com/tidyup/StockService/Service/ProductStatusService.class

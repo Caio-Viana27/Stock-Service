@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequestMapping("/products")
 public class ProductController {
 
-    private final String URI_BASE = "https://localhost:8080/products";
+    private final String URI_BASE = "http://localhost:8080/products";
 
     @Autowired
     private ProductService productService;

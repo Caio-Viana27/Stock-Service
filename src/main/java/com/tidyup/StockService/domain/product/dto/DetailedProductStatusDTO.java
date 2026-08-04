@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record ProductStatusDTO(
+public record DetailedProductStatusDTO(
         @NotNull
         Long id,
 
@@ -14,7 +14,8 @@ public record ProductStatusDTO(
         @Size(max = 50)
         StatusValue status
 ) {
-    public ProductStatusDTO(ProductStatus productStatus) {
+    public DetailedProductStatusDTO(ProductStatus productStatus) {
         this(productStatus.getId(), productStatus.getStatus());
     }
 }
+

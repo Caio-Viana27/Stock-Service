@@ -17,9 +17,8 @@ public class BrandService {
     private BrandRepository brandRepository;
 
     public BrandDTO create(@Valid BrandDTO brandDTO) {
-        var brand = new Brand(brandDTO);
-        brandRepository.save(brand);
-        return new BrandDTO(brand);
+        var brandEntity = brandRepository.save(new Brand(brandDTO));
+        return new BrandDTO(brandEntity);
     }
 
     public Page<BrandDTO> getAll(Pageable pageable) {
