@@ -1,8 +1,6 @@
 package com.tidyup.StockService.domain.product.entity;
 
-import com.tidyup.StockService.domain.product.dto.ProductCategoryDTO;
 import com.tidyup.StockService.domain.product.dto.CreateProductDTO;
-import com.tidyup.StockService.domain.product.dto.ProductStatusDTO;
 import com.tidyup.StockService.domain.product.dto.UpdateProductDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -89,13 +87,13 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void update(ProductStatusDTO data) {
-        this.status = new ProductStatus(data);
+    public void update(ProductStatus newStatus) {
+        this.status = newStatus;
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void update(List<ProductCategoryDTO> data) {
-        this.productCategoryList = data.stream().map(ProductCategory::new).toList();
+    public void update(List<ProductCategory> newCategoryList) {
+        this.productCategoryList = newCategoryList;
         this.updatedAt = LocalDateTime.now();
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,13 +63,17 @@ public class ProductService {
 
     public DetailedProductDTO update(UUID id, ProductStatusDTO dto) {
         Product product = productRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        product.update(dto);
+        ProductStatus productStatus = validateProductStatus(dto);
+        product.update(productStatus);
+        productRepository.saveAndFlush(product);
         return new DetailedProductDTO(product);
     }
 
     public DetailedProductDTO update(UUID id, List<ProductCategoryDTO> dtoList) {
         Product product = productRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        product.update(dtoList);
+        List<ProductCategory> entityList = validateProductCategoryList(dtoList);
+        product.update(entityList);
+        productRepository.saveAndFlush(product);
         return new DetailedProductDTO(product);
     }
 
@@ -113,6 +118,8 @@ public class ProductService {
             throw new EntityDoesNotExistException("Product Status with id: " + dto.id() + " doesn't exist!");
         ProductStatus productStatusEntity = productStatusOptional.get();
 
+        System.out.println(productStatusEntity);
+        System.out.println(dto);
         if (!productStatusEntity.equals(dto))
             throw new EntityDoesNotMatchException("Product Status attributes don't match the fields of the Product Status entity with the id: " + productStatusEntity.getId());
         return productStatusEntity;

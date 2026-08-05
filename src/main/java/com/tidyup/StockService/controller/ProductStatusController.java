@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -23,6 +24,7 @@ public class ProductStatusController {
     @Autowired
     private ProductStatusService productStatusService;
 
+    @Transactional
     @PostMapping
     public ResponseEntity<DetailedProductStatusDTO> createProductStatus(@RequestBody @Valid ProductStatusDTO dto, UriComponentsBuilder uriComponentsBuilder) {
         DetailedProductStatusDTO createProductStatus = productStatusService.create(dto);
@@ -42,12 +44,14 @@ public class ProductStatusController {
         return ResponseEntity.ok(productStatusDTO);
     }
 
+    @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<DetailedProductStatusDTO> updateProductStatus(@PathVariable Long id, @RequestBody @Valid ProductStatusDTO dto) {
         DetailedProductStatusDTO productStatusDTO = productStatusService.update(id, dto);
         return ResponseEntity.ok(productStatusDTO);
     }
 
+    @Transactional
     @DeleteMapping("/id")
     public ResponseEntity deleteProductStatus(@PathVariable Long id) {
         productStatusService.delete(id);
