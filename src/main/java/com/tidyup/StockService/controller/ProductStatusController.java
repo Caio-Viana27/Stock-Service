@@ -19,7 +19,7 @@ import java.net.URI;
 @RequestMapping("/status")
 public class ProductStatusController {
 
-    private final String BASE_URI = "http://localhost::8080/status";
+    private final String BASE_URI = "http://localhost:8080/status";
 
     @Autowired
     private ProductStatusService productStatusService;
